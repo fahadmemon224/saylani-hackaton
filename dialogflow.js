@@ -42,6 +42,20 @@ app.post("/webhook", async (req, res) => {
     function emailsender(agent) {
         const { name , email} = agent.parameters;
         agent.add(`Hello ${name.name}, I will send an email to ${email}`);
+        (async () => {
+            try {
+              const info = await transporter.sendMail({
+                from: '"fahad memon" <fahadmemon956@gmail.com>',
+                to: email,
+                subject: "Hello ✔",
+                text:`Hello ${name.name}, I will send an email to ${email}`, // plain‑text body
+              });
+              console.log("Message sent:", info.messageId);
+            } catch (error) {
+              console.error("Error sending email:", error);
+            }
+        })();
+
     }
 
     let intentMap = new Map();
