@@ -46,7 +46,7 @@ app.post("/webhook", async (req, res) => {
 
     let intentMap = new Map();
     intentMap.set('Default Welcome Intent', hi); 
-    intentMap.set('EMAIL TEST', emailsender());
+    intentMap.set('EMAIL TEST', emailsender);
     agent.handleRequest(intentMap);
 })
 app.listen(PORT, () => {
