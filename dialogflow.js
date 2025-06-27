@@ -1,14 +1,14 @@
 const dialogflow = require('@google-cloud/dialogflow');
+const nodemailer = require('nodemailer');
 const { WebhookClient, Suggestion } = require('dialogflow-fulfillment');
 const express = require("express")
 const cors = require("cors");
 require('dotenv').config();
 
 const app = express();
-app.use(express.json())
+app.use(express.json()) 
 app.use(cors());
 
-const nodemailer = require('nodemailer');
 
 // ✅ Setup email transporter
 const transporter = nodemailer.createTransport({
@@ -21,7 +21,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+
+
 const PORT = process.env.PORT || 8080;
+
 app.get("/", (req, res) => {
     res.send("Server is running");
 });
@@ -38,7 +41,7 @@ app.post("/webhook", async (req, res) => {
 
     function emailsender(agent) {
         const { name , email} = agent.parameters;
-        agent.add(`Hello ${name.person}, I will send an email to ${email}`);
+        agent.add(`Hello ${name.name}, I will send an email to ${email}`);
     }
 
     let intentMap = new Map();
