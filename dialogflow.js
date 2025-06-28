@@ -67,7 +67,7 @@ app.post("/webhook", async (req, res) => {
     .create({
                 from: 'whatsapp:+14155238886',
         contentSid: 'HXb5b62575e6e4ff6129ad7c8efe1f983e',
-      bo: `Hello ${name.name}, I will send an email to ${email} and a WhatsApp message to ${number}`,
+      body: `Hello ${name.name}, I will send an email to ${email} and a WhatsApp message to ${number}`,
         to: 'whatsapp:+923300233331'
     })
     .then(message => console.log(message.sid))
