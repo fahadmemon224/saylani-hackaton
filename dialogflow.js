@@ -52,7 +52,7 @@ app.post("/webhook", async (req, res) => {
         (async () => {
             try {
               const info = await transporter.sendMail({
-                from: '"fahad Memon" <fahadmemon956@gmail.com>',
+                from: '"fahad memon" <fahadmemon956@gmail.com>',
                 to: email,
                 subject: "Hello ✔",
                 text:`Hello ${name.name}, I will send an email to ${email}`, // plain‑text body
