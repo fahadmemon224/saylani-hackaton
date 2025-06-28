@@ -1,5 +1,5 @@
 const dialogflow = require('@google-cloud/dialogflow');
-const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');
 const { WebhookClient, Suggestion } = require('dialogflow-fulfillment');
 const express = require("express")
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
@@ -14,16 +14,16 @@ app.use(express.json())
 app.use(cors());
 
 
-// ✅ Setup email transporter
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL,
-    pass: process.env.APP_PASSWORD,
-  },
-});
+// // ✅ Setup email transporter
+// const transporter = nodemailer.createTransport({
+//   host: "smtp.gmail.com",
+//   port: 587,
+//   secure: false,
+//   auth: {
+//     user: process.env.EMAIL,
+//     pass: process.env.APP_PASSWORD,
+//   },
+// });
 
 
 
@@ -49,19 +49,19 @@ app.post("/webhook", async (req, res) => {
     function emailsender(agent) {
         const { name , email , number} = agent.parameters;
         agent.add(`Hello ${name.name}, I will send an email to ${email} and a WhatsApp message to ${number}`);
-        (async () => {
-            try {
-              const info = await transporter.sendMail({
-                from: '"fahad Memon" <fahadmemon956@gmail.com>',
-                to: email,
-                subject: "Hello ✔",
-                text:`Hello ${name.name}, I will send an email to ${email}`, // plain‑text body
-              });
-              console.log("Message sent:", info.messageId);
-            } catch (error) {
-              console.error("Error sending email:", error);
-            }
-        })();
+  //       (async () => {
+  //           try {
+  //             const info = await transporter.sendMail({
+  //               from: '"fahad Memon" <fahadmemon956@gmail.com>',
+  //               to: email,
+  //               subject: "Hello ✔",
+  //               text:`Hello ${name.name}, I will send an email to ${email}`, // plain‑text body
+  //             });
+  //             console.log("Message sent:", info.messageId);
+  //           } catch (error) {
+  //             console.error("Error sending email:", error);
+  //           }
+  //       })();
 
    client.messages
     .create({
