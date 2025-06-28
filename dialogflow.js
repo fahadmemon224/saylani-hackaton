@@ -2,8 +2,8 @@ const dialogflow = require('@google-cloud/dialogflow');
 const nodemailer = require('nodemailer');
 const { WebhookClient, Suggestion } = require('dialogflow-fulfillment');
 const express = require("express")
-const accountSid = 'AC3635d6f2b96b52629d9067ee9596ee2f';
-const authToken = 'd1f0a41ce36550daefb4b825bb03ff49';
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
 
 const cors = require("cors");
