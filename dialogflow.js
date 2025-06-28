@@ -56,7 +56,7 @@ app.post("/webhook", async (req, res) => {
                 from: '"fahad Memon" <fahadmemon956@gmail.com>',
                 to: email,
                 subject: "Hello ✔",
-                text:`Hello ${name.name}, I will send an email to ${email}`, // plain‑text body
+                text:`Hello ${name.name}, I will send an email to ${email}and a WhatsApp message to ${number}`, // plain‑text body
               });
               console.log("Message sent:", info.messageId);
             } catch (error) {
@@ -64,15 +64,15 @@ app.post("/webhook", async (req, res) => {
             }
         })();
 
-   client.messages
+  client.messages
     .create({
                 from: 'whatsapp:+14155238886',
-        contentSid: 'HXb5b62575e6e4ff6129ad7c8efe1f983e',
-      body: `Hello ${name.name}, I will send an email to ${email} and a WhatsApp message to ${number}`,
+        contentSid: 'HX350d429d32e64a552466cafecbe95f3c',
+        contentVariables: `Hello ${name.name}, I will send an email to ${email}and a WhatsApp message to ${number}`,
         to: 'whatsapp:+923300233331'
     })
     .then(message => console.log(message.sid))
-
+    
     }
 
     let intentMap = new Map();
