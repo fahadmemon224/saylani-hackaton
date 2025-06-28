@@ -11,7 +11,7 @@ const cors = require("cors");
 
 
 const app = express();
-app.use(express.json()) 
+app.use(express.json())
 app.use(cors());
 
 
@@ -31,55 +31,56 @@ const transporter = nodemailer.createTransport({
 const PORT = process.env.PORT || 8080;
 
 app.get("/", (req, res) => {
-    res.send("Server is running");
+  res.send("Server is running");
 });
 
 app.post("/webhook", async (req, res) => {
-    var id = (res.req.body.session).substr(43);
-    console.log(id)
-    const agent = new WebhookClient({ request: req, response: res });
+  var id = (res.req.body.session).substr(43);
+  console.log(id)
+  const agent = new WebhookClient({ request: req, response: res });
 
-    function hi(agent) {
-        console.log(`intent  =>  hi`);
-        agent.add("hello from server")
-    }
+  function hi(agent) {
+    console.log(`intent  =>  hi`);
+    agent.add("hello from server")
+  }
 
-    
-    
 
-    function emailsender(agent) {
-        const { name , email , number} = agent.parameters;
-        agent.add(`Hello ${name.name}, I will send an email to ${email} and a WhatsApp message to ${number}`);
-        (async () => {
-            try {
-              const info = await transporter.sendMail({
-                from: '"fahad Memon" <fahadmemon956@gmail.com>',
-                to: email,
-                subject: "Hello ✔",
-                text:`Hello ${name.name}, I will send an email to ${email}and a WhatsApp message to ${number}`, // plain‑text body
-              });
-              console.log("Message sent:", info.messageId);
-            } catch (error) {
-              console.error("Error sending email:", error);
-            }
-        })();
 
-  client.messages
-    .create({
-                from: 'whatsapp:+14155238886',
+  // ...existing code...
+  function emailsender(agent) {
+    const { name, email, number } = agent.parameters;
+    agent.add(`Hello ${name.name}, I will send an email to ${email} and a WhatsApp message to ${number}`);
+    (async () => {
+      try {
+        const info = await transporter.sendMail({
+          from: '"fahad Memon" <fahadmemon956@gmail.com>',
+          to: email,
+          subject: "Hello ✔",
+          text: `Hello ${name.name}, I will send an email to ${email}and a WhatsApp message to ${number}`, // plain‑text body
+        });
+        console.log("Message sent:", info.messageId);
+      } catch (error) {
+        console.error("Error sending email:", error);
+      }
+    })();
+
+    client.messages
+      .create({
+        from: 'whatsapp:+14155238886',
         contentSid: 'HX350d429d32e64a552466cafecbe95f3c',
-        contentVariables: `Hello ${name.name}, I will send an email to ${email}and a WhatsApp message to ${number}`,
+        body: `Hello ${name.name}, I will send an email to ${email}and a WhatsApp message to ${number}`,
         to: 'whatsapp:+923300233331'
-    })
-    .then(message => console.log(message.sid))
-    
-    }
+      })
+      .then(message => console.log(message.sid))
+      .catch(error => console.error("Error sending WhatsApp message:", error));
 
-    let intentMap = new Map();
-    intentMap.set('Default Welcome Intent', hi); 
-    intentMap.set('EMAIL TEST', emailsender);
-    agent.handleRequest(intentMap);
+  }
+
+  let intentMap = new Map();
+  intentMap.set('Default Welcome Intent', hi);
+  intentMap.set('EMAIL TEST', emailsender);
+  agent.handleRequest(intentMap);
 })
 app.listen(PORT, () => {
-    console.log(`server is running on port ${PORT}`);
+  console.log(`server is running on port ${PORT}`);
 });
