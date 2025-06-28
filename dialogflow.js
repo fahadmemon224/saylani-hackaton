@@ -2,6 +2,10 @@ const dialogflow = require('@google-cloud/dialogflow');
 const nodemailer = require('nodemailer');
 const { WebhookClient, Suggestion } = require('dialogflow-fulfillment');
 const express = require("express")
+const accountSid = 'AC3635d6f2b96b52629d9067ee9596ee2f';
+const authToken = 'd1f0a41ce36550daefb4b825bb03ff49';
+const client = require('twilio')(accountSid, authToken);
+
 const cors = require("cors");
 require('dotenv').config();
 
@@ -39,9 +43,12 @@ app.post("/webhook", async (req, res) => {
         agent.add("hello from server")
     }
 
+    
+    
+
     function emailsender(agent) {
-        const { name , email} = agent.parameters;
-        agent.add(`Hello ${name.name}, I will send an email to ${email}`);
+        const { name , email , number} = agent.parameters;
+        agent.add(`Hello ${name.name}, I will send an email to ${email} and a WhatsApp message to ${number}`);
         (async () => {
             try {
               const info = await transporter.sendMail({
@@ -55,6 +62,15 @@ app.post("/webhook", async (req, res) => {
               console.error("Error sending email:", error);
             }
         })();
+
+   client.messages
+    .create({
+                from: 'whatsapp:+14155238886',
+        contentSid: 'HXb5b62575e6e4ff6129ad7c8efe1f983e',
+      bo: `Hello ${name.name}, I will send an email to ${email} and a WhatsApp message to ${number}`,
+        to: 'whatsapp:+923300233331'
+    })
+    .then(message => console.log(message.sid))
 
     }
 
