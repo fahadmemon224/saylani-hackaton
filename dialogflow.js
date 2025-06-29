@@ -88,7 +88,7 @@ app.post("/webhook", async (req, res) => {
 
     <!-- Back Side -->
     <div style="width: 300px; border: 1px solid #ccc; padding: 15px; box-sizing: border-box;">
-      <p style="margin: 5px 0;"><strong>Name:</strong> ${studentname}</p>
+      <p style="margin: 5px 0;"><strong>Name:</strong> ${studentname.name}</p>
       <p style="margin: 5px 0;"><strong>Father name:</strong> ${fathername}</p>
       <p style="margin: 5px 0;"><strong>CNIC:</strong> ${cnic}</p>
       <p style="margin: 5px 0;"><strong>Course:</strong> ${coursename} </p>
@@ -164,7 +164,7 @@ app.post("/webhook", async (req, res) => {
 
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', hi);
-  intentMap.set('information', emailsender);
+  intentMap.set('registeration', emailsender);
   intentMap.set('Default Fallback Intent', fallback);
   agent.handleRequest(intentMap);
 })
