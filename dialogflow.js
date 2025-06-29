@@ -47,34 +47,32 @@ app.post("/webhook", async (req, res) => {
 
 
   // ...existing code...
-  function emailsender(agent) {
-    const { name, email, number } = agent.parameters;
-    agent.add(`Hello ${name.name}, I will send an email to ${email} and a WhatsApp message to ${number}`);
-    (async () => {
+  async function emailsender(agent) {
+      const { name, email, phone } = agent.parameters;
+      const emailMessage = `Hello ${name.name}, I will send an email to ${email} and a WhatsApp message to ${phone}.`;
+      agent.add(emailMessage);
+    
       try {
         const info = await transporter.sendMail({
-          from: '"fahad Memon" <fahadmemon956@gmail.com>',
+          from: 'fahad memon <fahadmemon956@gmail.com>', // sender address
           to: email,
           subject: "Hello ✔",
-          text: `Hello ${name.name}, I will send an email to ${email}and a WhatsApp message to ${number}`, // plain‑text body
+          text: emailMessage,
         });
-        console.log("Message sent:", info.messageId);
+        console.log("Email sent:", info.messageId);
+    
+        const message = await client.messages.create({
+          from: 'whatsapp:+14155238886',
+          body: `Hello ${name.name}, thanks for connecting. We have sent an email to ${email}. If you have any questions, feel free to reach out!`,
+          to: `whatsapp:+923300233331`
+        });
+        console.log("WhatsApp sent:", message.sid);
+    
       } catch (error) {
-        console.error("Error sending email:", error);
+        console.error("Error in email or WhatsApp:", error);
+        agent.add("There was an error sending your message. Please try again later.");
       }
-    })();
-
-    client.messages
-      .create({
-        from: 'whatsapp:+14155238886',
-        contentSid: 'HX350d429d32e64a552466cafecbe95f3c',
-        body: `Hello ${name.name}, I will send an email to ${email}and a WhatsApp message to ${number}`,
-        to: 'whatsapp:+923300233331'
-      })
-      .then(message => console.log(message.sid))
-      .catch(error => console.error("Error sending WhatsApp message:", error));
-
-  }
+    }
 
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', hi);
