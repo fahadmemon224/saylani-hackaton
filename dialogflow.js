@@ -78,7 +78,7 @@ app.post("/webhook", async (req, res) => {
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnx-xUnYll7mKYaNq8vYKEfALa3WmAJWsTuwXM9jtwO2SSRTqFkCfGhiSATEmj22L5b70&usqp=CAU" alt="SMIT Logo" style="height: 40px; margin-bottom: 10px;">
         <h3 style="color: #0072CE; margin: 0;">SAYLANI MASS IT<br>TRAINING PROGRAM</h3>
         <div style="margin: 10px 0;">
-         <img src="FAHAD.jfif" alt="Profile Picture" style="width: 80px; height: 80px; border-radius: 50%;">
+         <img src="https://media-mct1-1.cdn.whatsapp.net/v/t61.24694-24/455688887_457597333948537_3289090598300960900_n.jpg?ccb=11-4&oh=01_Q5Aa1wEXQpRW_PjwbjMkwAfL8_hN90FgJ4_PieIGpn2SYOK3yw&oe=686ED446&_nc_sid=5e03e0&_nc_cat=106" alt="Profile Picture" style="width: 80px; height: 80px; border-radius: 50%;">
         </div>
         <h4 style="margin: 5px 0;">${studentname.name}</h4>
         <p style="margin: 0;">${coursename} </p>
