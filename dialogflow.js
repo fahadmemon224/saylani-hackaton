@@ -51,7 +51,7 @@ app.post("/webhook", async (req, res) => {
   // ...existing code...
   async function emailsender(agent) {
     const { studentname, coursename, fathername, cnic , email , phone } = agent.parameters;
-    const emailMessage = `name:${studentname} fathername: ${fathername} cnic: ${cnic} coursename: ${coursename} email: ${email} 
+    const emailMessage = `name:${studentname.name} fathername: ${fathername} cnic: ${cnic} coursename: ${coursename} email: ${email} 
     Your form has been submitted successfully! and card was sent to the given email and WhatsApp number ${phone}.` ;
     agent.add(emailMessage);
 
@@ -80,7 +80,7 @@ app.post("/webhook", async (req, res) => {
         <div style="margin: 10px 0;">
           <img src="https://media.licdn.com/dms/image/v2/D4D03AQFv4QqDqK_UCA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1691741262666?e=2147483647&v=beta&t=DBxRp2sK4lImOEq13C8crH_Id8NOQuN776nSHhgKtZU" alt="Profile Picture" style="width: 80px; height: 80px; border-radius: 50%;">
         </div>
-        <h4 style="margin: 5px 0;">${studentname}</h4>
+        <h4 style="margin: 5px 0;">${studentname.name}</h4>
         <p style="margin: 0;">${coursename} </p>
         <p style="margin: 5px 0; font-weight: bold;">GD-${randomnumbgn()}</p>
       </div>
