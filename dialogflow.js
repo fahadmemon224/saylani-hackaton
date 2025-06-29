@@ -50,7 +50,7 @@ app.post("/webhook", async (req, res) => {
   }
   // ...existing code...
   async function emailsender(agent) {
-    const { name, coursename, fathername, cnic , email , phone } = agent.parameters;
+    const { studentname, coursename, fathername, cnic , email , phone } = agent.parameters;
     const emailMessage = `name:${studentname} fathername: ${fathername} cnic: ${cnic} coursename: ${coursename} email: ${email} 
     Your form has been submitted successfully! and card was sent to the given email and WhatsApp number ${phone}.` ;
     agent.add(emailMessage);
@@ -142,7 +142,7 @@ app.post("/webhook", async (req, res) => {
       agent.add("There was an error sending your message. Please try again later.");
     }
   }
-  
+
 
   async function fallback(agent) {
     try {
