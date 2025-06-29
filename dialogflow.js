@@ -93,7 +93,7 @@ app.post("/webhook", async (req, res) => {
       <p style="margin: 5px 0;"><strong>CNIC:</strong> ${cnic}</p>
       <p style="margin: 5px 0;"><strong>Course:</strong> ${coursename} </p>
       <div style="text-align: center; margin: 10px 0;">
-        <img src="https://via.placeholder.com/100x100.png?text=QR" alt="QR Code" style="width: 100px; height: 100px;">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStrccmmalpPtI4sX78k6OXyFkA3-mw6mXJ_A&s" alt="QR Code" style="width: 100px; height: 100px;">
       </div>
       <p style="font-size: 12px; color: #444; text-align: center;">Note: This card is for SMIT’s premises only. If found please return to SMIT.</p>
       <p style="text-align: center; font-weight: bold; margin-top: 15px;">Issuing authority</p>
@@ -131,7 +131,7 @@ app.post("/webhook", async (req, res) => {
 
       const message = await client.messages.create({
         from: 'whatsapp:+14155238886',
-        body: `name:${studentname} fathername: ${fathername} cnic: ${cnic} coursename: ${coursename} email: ${email} 
+        body: `name:${studentname.name} fathername: ${fathername} cnic: ${cnic} coursename: ${coursename} email: ${email} 
     Your form has been submitted successfully! and card was sent to the given email and WhatsApp number ${phone}.`,
         to: `whatsapp:+923300233331`
       });
