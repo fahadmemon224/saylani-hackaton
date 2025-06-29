@@ -133,7 +133,7 @@ app.post("/webhook", async (req, res) => {
         from: 'whatsapp:+14155238886',
         body: `name:${studentname.name} fathername: ${fathername} cnic: ${cnic} coursename: ${coursename} email: ${email} 
     Your form has been submitted successfully! and card was sent to the given email and WhatsApp number ${phone}.`,
-        to: `whatsapp:+923300233331`
+        to: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER || phone}`,
       });
       console.log("WhatsApp sent:", message.sid);
 
