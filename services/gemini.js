@@ -7,7 +7,7 @@ const API_KEY = process.env.GEMINI_API_KEY; // Store in .env
 
 async function runGeminiChat(prompt) {
     const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: MODEL_NAME });
+    const model = genAI.getGenerativeModel({ model: MODEL_NAME }); 
 
     const generationConfig = {
         temperature: 1,
