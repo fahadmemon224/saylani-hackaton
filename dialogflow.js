@@ -8,7 +8,7 @@ const authToken = process.env.TWILIO_AUTH_TOKEN || '';
 const client = require('twilio')(accountSid, authToken);
 const runGeminiChat = require('./services/gemini');
 
-const cors = require("cors"); 
+const cors = require("cors");
 
 
 const app = express();
@@ -40,57 +40,55 @@ app.post("/webhook", async (req, res) => {
   console.log(id)
   const agent = new WebhookClient({ request: req, response: res });
 
-  async function fallback(agent) {
-        try {
-            const action = req.body.queryResult.action;
-            const queryText = req.body.queryResult.queryText;
-
-            if (action === 'input.unknown') {
-                const response = await runGeminiChat(queryText);
-                agent.add(response);
-                console.log("Gemini:", response);
-            } else {
-                agent.add("Sorry, I couldn't understand. Please rephrase.");
-            }
-        } catch (err) {
-            console.error("Fallback error:", err);
-            agent.add("There was a problem getting a response. Please try again.");
-        }
-    }
-
-
-
+  function hi(agent) {
+    console.log(`intent  =>  hi`);
+    agent.add("hello from server")
+  }
   // ...existing code...
   async function emailsender(agent) {
-      const { name, email, phone } = agent.parameters;
-      const emailMessage = `Hello ${name.name}, I will send an email to ${email} and a WhatsApp message to ${phone}.`;
-      agent.add(emailMessage);
-    
-      try {
-        const info = await transporter.sendMail({
-          from: 'fahad memon <fahadmemon956@gmail.com>', // sender address
-          to: email,
-          subject: "Hello ✔",
-          text: emailMessage,
-        });
-        console.log("Email sent:", info.messageId);
-    
-        const message = await client.messages.create({
-          from: 'whatsapp:+14155238886',
-          body: `Hello ${name.name}, thanks for connecting. We have sent an email to ${email}. If you have any questions, feel free to reach out!`,
-          to: `whatsapp:+923300233331`
-        });
-        console.log("WhatsApp sent:", message.sid);
-    
-      } catch (error) {
-        console.error("Error in email or WhatsApp:", error);
-        agent.add("There was an error sending your message. Please try again later.");
-      }
-    }
+    const { name, email, phone } = agent.parameters;
+    const emailMessage = `Hello ${name.name}, I will send an email to ${email} and a WhatsApp message to ${phone}.`;
+    agent.add(emailMessage);
 
-    async function fallback(agent) {
-      
+    try {
+      const info = await transporter.sendMail({
+        from: 'fahad memon <fahadmemon956@gmail.com>', // sender address
+        to: email,
+        subject: "Hello ✔",
+        text: emailMessage,
+      });
+      console.log("Email sent:", info.messageId);
+
+      const message = await client.messages.create({
+        from: 'whatsapp:+14155238886',
+        body: `Hello ${name.name}, thanks for connecting. We have sent an email to ${email}. If you have any questions, feel free to reach out!`,
+        to: `whatsapp:+923300233331`
+      });
+      console.log("WhatsApp sent:", message.sid);
+
+    } catch (error) {
+      console.error("Error in email or WhatsApp:", error);
+      agent.add("There was an error sending your message. Please try again later.");
     }
+  }
+
+  async function fallback(agent) {
+    try {
+      const action = req.body.queryResult.action;
+      const queryText = req.body.queryResult.queryText;
+
+      if (action === 'input.unknown') {
+        const response = await runGeminiChat(queryText);
+        agent.add(response);
+        console.log("Gemini:", response);
+      } else {
+        agent.add("Sorry, I couldn't understand. Please rephrase.");
+      }
+    } catch (err) {
+      console.error("Fallback error:", err);
+      agent.add("There was a problem getting a response. Please try again.");
+    }
+  }
 
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', hi);
