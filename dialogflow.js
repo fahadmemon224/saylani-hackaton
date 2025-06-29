@@ -51,15 +51,17 @@ app.post("/webhook", async (req, res) => {
   // ...existing code...
   async function emailsender(agent) {
     const { studentname, coursename, fathername, cnic , email , phone } = agent.parameters;
-    const emailMessage = `name:${studentname.name} fathername: ${fathername} cnic: ${cnic} coursename: ${coursename} email: ${email} 
-    Your form has been submitted successfully! and card was sent to the given email and WhatsApp number ${phone}.` ;
+    const emailMessage = `Thank you, ${studentname.name}  ${fathername} ${cnic} . Your registration for  ${coursename} is complete ✅  Confirmation will be sent to:
+    email: ${email}
+    WhatsApp number ${phone} cnic: 
+    ` ;
     agent.add(emailMessage);
 
     try {
       const info = await transporter.sendMail({
-        from: 'fahad memon <fahadmemon956@gmail.com>', // sender address
+        from: 'SMIT <fahadmemon956@gmail.com>', // sender address
         to: email,
-        subject: "Hello ✔",
+        subject: "REGISTRATION SUCCESSFULL", // Subject line
              // text: "Hello world?", // plain‑text body
           html: `<!DOCTYPE html>
 <html lang="en">
@@ -131,8 +133,10 @@ app.post("/webhook", async (req, res) => {
 
       const message = await client.messages.create({
         from: 'whatsapp:+14155238886',
-        body: `name:${studentname.name} fathername: ${fathername} cnic: ${cnic} coursename: ${coursename} email: ${email} 
-    Your form has been submitted successfully! and card was sent to the given email and WhatsApp number ${phone}.`,
+        body:  `Thank you, ${studentname.name}  ${fathername} ${cnic} . Your registration for  ${coursename} is complete ✅  Confirmation will be sent to:
+    email: ${email}
+    WhatsApp number ${phone} cnic: 
+    ` ,
         to: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER || phone}`,
       });
       console.log("WhatsApp sent:", message.sid);
