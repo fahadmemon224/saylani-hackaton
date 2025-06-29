@@ -42,7 +42,7 @@ app.post("/webhook", async (req, res) => {
 
   function hi(agent) {
     console.log(`intent  =>  hi`);
-    agent.add("hello from server")
+    agent.add("Assalam-o-Alaikum! I'm Saylani's AI assistant. How can I help you today?");
   }
   // ...existing code...
   async function emailsender(agent) {
