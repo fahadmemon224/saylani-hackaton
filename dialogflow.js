@@ -51,7 +51,8 @@ app.post("/webhook", async (req, res) => {
   // ...existing code...
   async function emailsender(agent) {
     const { studentname, coursename, fathername, cnic , email , phone } = agent.parameters;
-    const emailMessage = `Thank you, ${studentname.name}  ${fathername} CNIC number ${cnic} . Your registration for  ${coursename} is complete ✅  Confirmation will be sent to:
+    const emailMessage = `Thank you, ${studentname.name}  ${fathername} CNIC number ${cnic} . Your registration for  ${coursename} is complete ✅ 
+    Confirmation will be sent to:
     email: ${email}
     WhatsApp number ${phone} 
     ` ;
